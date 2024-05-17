@@ -49,31 +49,18 @@ const PORT = process.env.PORT || 5005;
 const allRoutes = require("./routes/index.routes");
 app.use("/api", allRoutes);
 
-// const projectRouter = require("./routes/project.routes");
-// app.use("/api", isAuthenticated, projectRouter);
-
 const cohortRouter = require("./routes/cohort.routes"); // <== IMPORT
 app.use("/api", isAuthenticated, cohortRouter); // <== ADD
 
 const authRouter = require("./routes/auth.routes"); //  <== IMPORT
 app.use("/auth", authRouter);
 
-// const studendRouter = require("./routes/student.routes");
-// app.use("/api", studentRouter);
+const studendRouter = require("./routes/student.routes");
+app.use("/api", studentRouter);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
-// app.get("/docs", (req, res) => {
-//   res.sendFile(__dirname + "/views/docs.html");
-// });
 
-// app.get("/api/cohorts", (req, resp) => {
-//   resp.json(cohorts);
-// });
-
-// app.get("/api/students", (req, resp) => {
-//   resp.json(students);
-// });
 // START SERVER
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT}`);
