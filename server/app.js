@@ -7,6 +7,8 @@ const cors = require("cors");
 require("dotenv").config();
 require("./db");
 
+const { isAuthenticated } = require("./middleware/jwt.middleware");
+
 // INITIALIZE EXPRESS APP - https://expressjs.com/en/4x/api.html#express
 const app = express();
 
@@ -47,8 +49,14 @@ const PORT = process.env.PORT || 5005;
 const allRoutes = require("./routes/index.routes");
 app.use("/api", allRoutes);
 
+// const projectRouter = require("./routes/project.routes");
+// app.use("/api", isAuthenticated, projectRouter);
+
 const cohortRouter = require("./routes/cohort.routes"); // <== IMPORT
-app.use("/api", cohortRouter); // <== ADD
+app.use("/api", isAuthenticated, cohortRouter); // <== ADD
+
+const authRouter = require("./routes/auth.routes"); //  <== IMPORT
+app.use("/auth", authRouter);
 
 // const studendRouter = require("./routes/student.routes");
 // app.use("/api", studentRouter);
